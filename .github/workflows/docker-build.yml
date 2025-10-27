@@ -1,4 +1,5 @@
 name: Build and Push Docker Image
+
 on:
   push:
     branches: [ "main" ]
@@ -10,6 +11,20 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Set up .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build the app
+        run: dotnet build --configuration Release --no-restore
+
+      - name: Publish the app
+        run: dotnet publish --configuration Release --no-build -o ./publish
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -27,5 +42,5 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: |
-            uporabnisko_ime/razvojingradnja:latest
-            uporabnisko_ime/razvojingradnja:${{ github.sha }}
+            erikpajtler/razvojingradnja:latest
+            erikpajtler/razvojingradnja:${{ github.sha }}
