@@ -2,45 +2,55 @@ name: Build and Push Docker Image
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      
+main
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      
+name: Checkout code
+      uses: actions/checkout@v4
 
-      - name: Set up .NET SDK
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: '8.0.x'
+      
+name: Set up .NET SDK
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x'
 
-      - name: Restore dependencies
-        run: dotnet restore razvojingradnja/razvojingradnja.csproj
+      
+name: Restore dependencies
+      run: dotnet restore razvojingradnja.csproj
 
-      - name: Build the app
-        run: dotnet build razvojingradnja/razvojingradnja.csproj --configuration Release --no-restore
+      
+name: Build the app
+      run: dotnet build razvojingradnja.csproj --configuration Release --no-restore
 
-      - name: Publish the app
-        run: dotnet publish razvojingradnja/razvojingradnja.csproj --configuration Release --no-build -o ./publish
+      
+name: Publish the app
+      run: dotnet publish razvojingradnja.csproj --configuration Release --no-build -o ./publish
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+      
+name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
 
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+      
+name: Log in to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          file: ./Dockerfile
-          push: true
-          tags: |
-            erikpajtler/razvojingradnja:latest
-            erikpajtler/razvojingradnja:${{ github.sha }}
+      
+name: Build and push Docker image
+      uses: docker/build-push-action@v6
+      with:
+        context: .
+        file: ./Dockerfile
+        push: true
+        tags: |
+          erikpajtler/razvojingradnja:latest
+          erikpajtler/razvojingradnja:${{ github.sha }}
