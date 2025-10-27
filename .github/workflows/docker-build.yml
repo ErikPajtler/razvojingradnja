@@ -18,15 +18,12 @@ jobs:
           dotnet-version: '8.0.x'
 
       - name: Restore dependencies
-        working-directory: ./razvojingradnja
         run: dotnet restore
 
       - name: Build the app
-        working-directory: ./razvojingradnja
         run: dotnet build --configuration Release --no-restore
 
       - name: Publish the app
-        working-directory: ./razvojingradnja
         run: dotnet publish --configuration Release --no-build -o ./publish
 
       - name: Set up Docker Buildx
@@ -41,8 +38,8 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
         with:
-          context: ./razvojingradnja
-          file: ./razvojingradnja/Dockerfile
+          context: .
+          file: ./Dockerfile
           push: true
           tags: |
             erikpajtler/razvojingradnja:latest
