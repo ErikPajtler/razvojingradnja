@@ -30,7 +30,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
         with:
-          context: ./repos/razvojingradnja/razvojingradnja
-          file: ./repos/razvojingradnja/razvojingradnja/Dockerfile
+          context: C:\Users\Erik\source\repos\razvojingradnja\razvojingradnja
+          file: C:\Users\Erik\source\repos\razvojingradnja\razvojingradnja\Dockerfile
           push: true
           tags: erikpajtler/razvojingradnja:latest,erikpajtler/razvojingradnja:${{ github.sha }}
