@@ -34,7 +34,7 @@ jobs:
           push: true
           tags: erikpajtler/razvojingradnja:latest,erikpajtler/razvojingradnja:${{ github.sha }}
           
-name: Deploy to Azure Web App
+      - name: Deploy to Azure Web App
       uses: azure/webapps-deploy@v3
       with:
         app-name: "rgislevelstat"   # ime tvoje Web App v Azure
